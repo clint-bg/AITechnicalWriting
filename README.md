@@ -1,2 +1,2 @@
-# AITechnicalWriting
-A short presentation using reveal.js to show examples and student perceptions in AI-augmented technical writing 
+# T4L-AITechnicalWriting
+Reveal js presentation on AI Supported Technical Writing
