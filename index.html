@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Technical Writing w AI</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -97,8 +97,224 @@
 						<h4>Initial Instructor Feedback can be Automated and then <span style="background-color: #6c8eff;"">Individually Tailored</span></h4>
 					</section>
 
-					<section data-background="apiScreenShot.png">
+					<section data-transition="convex" data-background="https://raw.githubusercontent.com/clint-bg/AITechnicalWriting/refs/heads/gh-pages/apiScreenShot.png">
 					</section>
+					
+					<section data-transition="convex" data-auto-animate data-background="#9e5465">
+						<h4 data-id="code-title">Example Code to Work with the API</h4>
+						<pre data-id="code-animation"><code class="hljs python" data-trim data-line-numbers="|11-12|14|31|72-83|166|186-195"><script type="text/template">
+						import google.generativeai as genai
+						import nltk
+						from nltk.chunk import ne_chunk
+						from nltk.tokenize import word_tokenize
+
+						nltk.download('punkt')
+						nltk.download('averaged_perceptron_tagger')
+						nltk.download('maxent_ne_chunker')
+						nltk.download('words')
+
+						genai.configure(api_key='<<yourkey>>')
+						model = genai.GenerativeModel('gemini-pro')
+
+						def extract_text_from_pdf(pdf_path):
+						"""
+						Extracts text from a PDF file using PyPDF2.
+						Args:
+							pdf_path (str): The path to the PDF file.
+						Returns:
+							str: The extracted text.
+						"""
+						text = ""
+						with open(pdf_path, 'rb') as pdf_file:
+							pdf_reader = PyPDF2.PdfReader(pdf_file)
+							num_pages = len(pdf_reader.pages)
+							for page_num in range(num_pages):
+								page = pdf_reader.pages[page_num]
+								text += page.extract_text()
+						return text
+
+						def extract_text_from_docx(docx_path):
+							text = docx2txt.process(docx_path)
+							return text
+							
+						example = """
+						<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+						<html>
+						<head>
+							<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+							<meta http-equiv="Content-Style-Type" content="text/css">
+							<title></title>
+							<meta name="Generator" content="Cocoa HTML Writer">
+							<meta name="CocoaVersion" content="2566">
+							<style type="text/css">
+							p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 20.0px Times; -webkit-text-stroke: #000000}
+							span.s1 {font-kerning: none}
+							table, th, td {
+								border: 1px solid grey; /* Add a border to the table and all cells */
+								padding: 10px; 
+							}
+							th {
+								background-color: #D3D3D3; /* Add a grey background color to the header */
+							}
+							.header {
+								padding: 0px;
+								text-align: center;
+								background: white;
+								color: white;
+								font-size: 30px;
+							}
+							.header img {
+								float: left;
+								height: 100px;
+							}
+							</style>
+						</head>
+						<div class="header">
+							<img src="ChemEBanner.png" alt="logo" />
+						</div>
+						<body>
+							<p> </p>
+							<h1>Dye Fading Reaction Analysis and Report Feedback</h1>
+							<p class="p1">ChEn 345 Materials and Reactions Lab</p>
+							<p class="p1">Nov. 22, 2024</p>
+							<br>
+							<table>
+							<thead>
+								<tr>
+								<th>Section</th>
+								<th>Rubric</th>
+								<th>Comments</th>
+								<th>Score</th>
+								<th>Possible</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								<td>Executive Summary</td>
+								<td>The executive summary is clear and concise and addresses the specific points of the problem statement in an opening paragraph. The sentences should flow from one to another without repeated information. Specifics on the reaction rate constant should be given as well as a brief comments on the sizing of the PFR and CSTR to achieve the rate of conversion.</td>
+								<td>The first sentence starts good but it ended with a detail on excess that I didn’t think was important enough to be listed in the first sentence of the report.
+						
+									<br><br>Also, it could be confusing to the reader to have Beer’s law in the same sentence stating how you determined the reaction was first order. Beer’s law wasn’t used for that. You used the concentration as a function of time in a batch reactor for that.
+									
+									<br><br>The executive summary is really important and I think you could have made it more clear.
+									
+									<br><br>I liked that you gave the important values you determined in a succinct way.
+									</td>
+								<td>16</td>
+								<td>20</td>
+								</tr>
+								<tr>
+								<td>Introduction</td>
+								<td>The introduction should have the background of the dye reaction as well as other information relevant to the other sections of the report.</td>
+								<td>I like the start with mentioning what happens but the first sentence is redundant mentioning bleach twice and decolorize and clear. I liked that you give details of the reaction on it being non catalytic and the effect of an excess reactant.
+						
+									<br><br>I also appreciated defining the purpose of the experiment.
+									</td>
+								<td>9</td>
+								<td>10</td>
+								</tr>
+								<tr>
+								<td>Materials and Methods</td>
+								<td>A description of the method used to collect the data together with a summary of that data should be clearly explained and presented.</td>
+								<td>In a report, you’ll want to either create a table of materials or you can detail them in paragraph form rather than just listing the materials as you did. Great plot of the absorbance vs concentration as it looks like the R2 value would be close to 1.
+						
+									<br><br>Great job describing each of the different reactor types with pictures.
+									</td>
+								<td>14</td>
+								<td>15</td>
+								</tr>
+								<tr>
+								<td>Data Analysis and Results</td>
+								<td>The analysis of the data should show the methods of obtaining the rate constant together with the Arrhenius constants in a clear and concise way. It should also include your sizing result for the PFR (length and diameter) and CSTR (volume). Technical accuracy is part of the evaluation.</td>
+								<td>In describing the excess bleach, you could also talk about how the reaction rate is a function of the bleach concentration and give a rate equation: r = k*A^n*B^m or something and talk to that and what that means.
+						
+									<br><br>Good job giving the design equations in your individual discussions of each reactor type.
+									</td>
+								<td>16</td>
+								<td>16</td>
+								</tr>
+								<tr>
+								<td>Discussion</td>
+								<td>A discussion of the experimental results and any comments you have on what you would have changed or improved.</td>
+								<td>The k value for your batch reactor was significantly higher. I thought you would mention that as part of the discussion on the bleach concentration potential differences.</td>
+								<td>9</td>
+								<td>10</td>
+								</tr>
+								<tr>
+								<td>Conclusions</td>
+								<td>Conclusions should include many of the items in the executive summary answering the questions in the problem statement succinctly.</td>
+								<td>The first sentence could better help the reader in understanding how you answered the problem statement. I didn’t think Beer’s law is a primary part of doing that. </td>
+								<td>9</td>
+								<td>10</td>
+								</tr>
+								<tr>
+								<td>Contributor Statement</td>
+								<td>Please list each team member and what they contributed to the report. For example, Joe wrote the Executive Summary, Mary completed the majority of the analysis section, Pete completed the Discussion and Conclusions.</td>
+								<td>The contributor statement clearly outlines the individual contributions of each team member, providing a good overview of the roles and responsibilities within the group.</td>
+								<td>4</td>
+								<td>4</td>
+								</tr>
+								<tr>
+								<td></td>
+								<td></td>
+								<td>Total</td>
+								<td>72</td>
+								<td>100</td>
+								</tr>
+							</tbody>
+							</table>
+							<br>
+							<p>Overall, the report provides a comprehensive analysis of the reaction kinetics of Red 40 dye with bleach. The experimental design, data analysis, and conclusions are presented in a clear and concise manner. The recommendations for reactor sizing are well-supported by the experimental findings. With a few minor improvements, such as providing more quantitative details in the executive summary, expanding on the discussion of the temperature dependence, and addressing the limitations of the study, this report would be an even stronger piece of scientific writing.</p>
+						</body>
+						</html>
+						"""
+						def replace_names(text):
+							flag = True
+							tokens = word_tokenize(text)
+							tags = nltk.pos_tag(tokens)
+							modText = []
+							for chunk in ne_chunk(tags):
+								if hasattr(chunk, 'label'):
+									modText.append(chunk.label())
+								else:
+									modText.append(chunk[0])
+							result = ' '.join(modText)
+							return result
+
+						directory = "<<directory where the files are>>"
+
+						for filename in os.listdir(directory):
+							text = ''
+							if not os.path.isdir(os.path.join(directory, filename)):
+								namea = filename.split('.')
+								name = namea[0]
+								if filename.endswith(".pdf"):
+									filepath = os.path.join(directory, filename)
+									text = extract_text_from_pdf(filepath)
+									text = replace_names(text)
+								elif filename.endswith(".docx"):
+									filepath = os.path.join(directory, filename)
+									text = extract_text_from_docx(filepath)
+									text = replace_names(text)
+								if bool(text):
+									response = model.generate_content(['Give Feedback for this REPORT in the html wrapper:'+text+ 'An example of such is:'+example])
+									#pdf = MarkdownPdf(toc_level=2)
+									#pdf.add_section(Section('## Feedback for '+ name + '\n\n'+response.text,toc=False)) #, paper_size="A4-L"))
+									
+									#pdf.save('Feedback/'+name+'-ReviewFeedback'+'.pdf')
+									with open('Feedback/'+name+'-GeminiFeedback.html', 'w') as f:
+										f.write(response.text)
+
+						</script></code></pre>
+					</section>
+
+					<section data-background-iframe="https://hakim.se" data-background-interactive>
+						<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+							<h2>Iframe Backgrounds</h2>
+							<p>Since reveal.js runs on the web, you can easily embed other web content. Try interacting with the page in the background.</p>
+						</div>
+					</section>
+
 				</section>
 
 			</div>
